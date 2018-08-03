@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ParserStart
+namespace TIC.ParserStart
 {
     class Program
     {
