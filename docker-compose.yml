@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  tic.web:
+    image: tic.web
+    build:
+      context: ./TIC.Web
+      dockerfile: Dockerfile
