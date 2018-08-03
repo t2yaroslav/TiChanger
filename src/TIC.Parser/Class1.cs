@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Parser
+namespace TIC.Parser
 {
     public class Class1
     {
