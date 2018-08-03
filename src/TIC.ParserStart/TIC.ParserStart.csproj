@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TIC.ApiClient\TIC.ApiClient.csproj" />
     <ProjectReference Include="..\TIC.Parser\TIC.Parser.csproj" />
   </ItemGroup>
 </Project>

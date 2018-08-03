@@ -1,4 +1,5 @@
 ﻿using System;
+using TIC.ApiClient;
 
 namespace TIC.ParserStart
 {
@@ -6,6 +7,7 @@ namespace TIC.ParserStart
     {
         static void Main(string[] args)
         {
+            /*
             Console.WriteLine("Hello!");
             var parser = new Parser.Parser();
             var list = parser.Start().Result;
@@ -17,6 +19,16 @@ namespace TIC.ParserStart
                 Console.WriteLine(item);
             }
 
+            Console.ReadKey();
+            */
+            
+            
+            Console.WriteLine("REST client!");
+            var restClient = new Rest();
+            var repo = restClient.Go().Result;
+
+            Console.WriteLine("");
+            Console.WriteLine(repo.name);
             Console.ReadKey();
         }
     }
