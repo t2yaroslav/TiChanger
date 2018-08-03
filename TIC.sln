@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TIC.Web", "src\TIC.Web\TIC.Web.csproj", "{07401E6A-36FD-4DC6-B751-2C749966B766}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TIC.ParserStart", "TIC.ParserStart\TIC.ParserStart.csproj", "{63694AC0-74CE-4A9D-8B3E-15443262A835}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{07401E6A-36FD-4DC6-B751-2C749966B766}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07401E6A-36FD-4DC6-B751-2C749966B766}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07401E6A-36FD-4DC6-B751-2C749966B766}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63694AC0-74CE-4A9D-8B3E-15443262A835}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63694AC0-74CE-4A9D-8B3E-15443262A835}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63694AC0-74CE-4A9D-8B3E-15443262A835}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63694AC0-74CE-4A9D-8B3E-15443262A835}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
