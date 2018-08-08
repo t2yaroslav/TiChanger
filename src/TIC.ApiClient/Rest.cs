@@ -20,62 +20,56 @@ namespace TIC.ApiClient
 {
     public class Rest
     {
-        #region Fields
-
-        //TODO: Change these values to what you want them to be
-        private const string RepoName = "Backup";
-        private const string RepoDescription = "Some description";
         private static string username = "t2yaroslav@gmail.com";
         private static string password = "Ok2Yaroslav";
+        private static string baseUrl = "https://x.okchanger.com";
+        private readonly RestClient _client;
 
-        #endregion
-
-        #region Methods
-
-
-        public void GetOkChangerClient2()
+        public Rest()
         {
-            ServicePointManager.CheckCertificateRevocationList = false;
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
-            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-
-
-            var url = "https://x.okchanger.com";
-
             Console.WriteLine("new RestClient");
-            var client = new RestClient(url);
-            client.Authenticator = new HttpBasicAuthenticator(username, password);
+            _client = new RestClient(baseUrl);
+            _client.AddHandler("text/plain", new JsonDeserializer());
+            //client.Authenticator = new HttpBasicAuthenticator(username, password);
 
             Console.WriteLine("login");
             var requestLogin = new RestRequest("api/Login", Method.POST);
             requestLogin.AddParameter("Account", username);
             requestLogin.AddParameter("Password", password);
 
-            IRestResponse responseLogin = client.Execute(requestLogin);
+            IRestResponse responseLogin = _client.Execute(requestLogin);
+            ApplyCookie(responseLogin.Cookies);
+        }
 
-            // login success, save cookies
-            var sessionCookie = responseLogin.Cookies.FirstOrDefault();
+        public Exchangers GetExchangerList(ExchangersListFilter filter)
+        {
+            Console.WriteLine("GetExchangersList");
+            //var request = CreateRequest("api/GetExchangersList", Method.GET, "{\"filter\":{\"UserID\":\"\",\"Text\":\"\",\"Url\":\"\",\"OKPAYWallet\":\"\",\"WMID\":\"\",\"Statuses\":[],\"IsFollowURLCorrect\":\"\",\"HasRatesErrors\":\"\",\"IsRefURLEmpty\":\"\",\"IsHidden\":\"\",\"IsUntrusted\":\"\"},\"startFrom\":0}");
+            var request = new RestRequest("api/GetExchangersList", Method.POST);
+            request.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; };
+            request.AddJsonBody(filter);
+            
+            IRestResponse<Exchangers> restResponse = _client.Execute<Exchangers>(request);
+            return restResponse.Data;
+        }
+
+        private void ApplyCookie(IList<RestResponseCookie> responseLoginCookies)
+        {
+            var sessionCookie = responseLoginCookies.FirstOrDefault();
             if (sessionCookie != null)
             {
                 Console.WriteLine("Cookie - " + sessionCookie.Name);
                 var cookieContainer = new CookieContainer();
                 cookieContainer.Add(new Cookie(sessionCookie.Name, sessionCookie.Value, sessionCookie.Path,
                     sessionCookie.Domain));
-                client.CookieContainer = cookieContainer;
+                _client.CookieContainer = cookieContainer;
             }
-
-            Console.WriteLine("GetExchangersList");
-            //var request = CreateRequest("api/GetExchangersList", Method.GET, "{\"filter\":{\"UserID\":\"\",\"Text\":\"\",\"Url\":\"\",\"OKPAYWallet\":\"\",\"WMID\":\"\",\"Statuses\":[],\"IsFollowURLCorrect\":\"\",\"HasRatesErrors\":\"\",\"IsRefURLEmpty\":\"\",\"IsHidden\":\"\",\"IsUntrusted\":\"\"},\"startFrom\":0}");
-            var request = new RestRequest("api/GetExchangersList", Method.POST);
-
-
-            Console.WriteLine("Execute(request)");
-            IRestResponse response = client.Execute(request);
-            var content = response.Content;
-            Console.WriteLine(content);
+            else throw new Exception("No found cookies");
         }
 
+/*
         private IRestRequest CreateRequest(string uri, Method method, object body)
         {
             IRestRequest request = new RestRequest(uri, method);
@@ -127,7 +121,6 @@ namespace TIC.ApiClient
             string ISerializer.DateFormat { get; set; }
             public string ContentType { get; set; }
         }
-
-        #endregion
+        */
     }
 }

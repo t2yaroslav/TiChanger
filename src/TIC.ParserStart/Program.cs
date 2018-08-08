@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using TIC.ApiClient;
+using TIC.ApiClient.Model;
 
 namespace TIC.ParserStart
 {
@@ -22,9 +23,16 @@ namespace TIC.ParserStart
 
             Console.ReadKey();
             */
-            
+
             var restClient = new Rest();
-            restClient.GetOkChangerClient2();
+
+            var filter = new ExchangersListFilter()
+            {
+                Filter = new Filter(),
+                StartFrom = 0
+            };
+
+            var exchangers = restClient.GetExchangerList(filter);
             /*
             Console.WriteLine("REST client!");
             var restClient = new Rest();

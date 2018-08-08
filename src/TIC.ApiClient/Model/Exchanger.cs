@@ -1,19 +1,12 @@
-﻿// To parse this JSON data, add NuGet 'Newtonsoft.Json' then do:
-//
-//    using TIC.ApiClient.Model;
-//
-//    var exchanger = Exchanger.FromJson(jsonString);
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace TIC.ApiClient.Model
 {
-    using System;
-    using System.Collections.Generic;
-
-    using System.Globalization;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-
-    public partial class Exchanger
+    public partial class Exchangers
     {
         [JsonProperty("Collection")]
         public Collection Collection { get; set; }
@@ -79,62 +72,6 @@ namespace TIC.ApiClient.Model
         public object TotalEarnings { get; set; }
     }
 
-    public enum StatusName { Enabled };
+    public enum StatusName { Enabled, New };
 
-    public partial class Exchanger
-    {
-        public static Exchanger FromJson(string json) => JsonConvert.DeserializeObject<Exchanger>(json, TIC.ApiClient.Model.Converter.Settings);
-    }
-
-    public static class Serialize
-    {
-        public static string ToJson(this Exchanger self) => JsonConvert.SerializeObject(self, TIC.ApiClient.Model.Converter.Settings);
-    }
-
-    internal static class Converter
-    {
-        public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
-        {
-            MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
-            DateParseHandling = DateParseHandling.None,
-            Converters = {
-                StatusNameConverter.Singleton,
-                new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
-            },
-        };
-    }
-
-    internal class StatusNameConverter : JsonConverter
-    {
-        public override bool CanConvert(Type t) => t == typeof(StatusName) || t == typeof(StatusName?);
-
-        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.Null) return null;
-            var value = serializer.Deserialize<string>(reader);
-            if (value == "Enabled")
-            {
-                return StatusName.Enabled;
-            }
-            throw new Exception("Cannot unmarshal type StatusName");
-        }
-
-        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
-        {
-            if (untypedValue == null)
-            {
-                serializer.Serialize(writer, null);
-                return;
-            }
-            var value = (StatusName)untypedValue;
-            if (value == StatusName.Enabled)
-            {
-                serializer.Serialize(writer, "Enabled");
-                return;
-            }
-            throw new Exception("Cannot marshal type StatusName");
-        }
-
-        public static readonly StatusNameConverter Singleton = new StatusNameConverter();
-    }
 }
