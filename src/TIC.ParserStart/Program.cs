@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using TIC.ApiClient;
 
 namespace TIC.ParserStart
@@ -22,14 +23,17 @@ namespace TIC.ParserStart
             Console.ReadKey();
             */
             
-            
+            var restClient = new Rest();
+            restClient.GetOkChangerClient2();
+            /*
             Console.WriteLine("REST client!");
             var restClient = new Rest();
             var repo = restClient.Go().Result;
-
+            
             Console.WriteLine("");
-            Console.WriteLine(repo.name);
+            Console.WriteLine(repo.Collection.ItemsCount);
             Console.ReadKey();
+            */
         }
     }
 }

@@ -1,5 +1,5 @@
 FROM amazonlinux:2017.12
-LABEL maintainer "Blueberry Consultants Ltd"
+LABEL maintainer ""
 
 WORKDIR /app
 
@@ -23,4 +23,4 @@ ENV ASPNETCORE_URLS http://*:80
 
 EXPOSE 80
 
-ENTRYPOINT [ "/app/BBWT.Web" ]
+ENTRYPOINT [ "/app/TIC.Web" ]
