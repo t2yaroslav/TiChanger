@@ -8,48 +8,33 @@ namespace TIC.ApiClient.Model
 {
     public partial class ExchangersListFilter
     {
-        [JsonProperty("filter")]
-        public Filter Filter { get; set; }
+        [JsonProperty("filter")] public Filter filter = new Filter();
 
-        [JsonProperty("startFrom")]
-        public long StartFrom { get; set; }
+        [JsonProperty("startFrom")] public int startFrom;
     }
 
     public partial class Filter
     {
-        [JsonProperty("UserID")]
-        public string UserId { get; set; }
+        [JsonProperty("UserID")] public string UserID = "";
 
-        [JsonProperty("Text")]
-        public string Text { get; set; }
+        [JsonProperty("Text")] public string Text = "";
 
-        [JsonProperty("Url")]
-        public string Url { get; set; }
+        [JsonProperty("Url")] public string Url = "";
 
-        [JsonProperty("OKPAYWallet")]
-        public string OkpayWallet { get; set; }
+        [JsonProperty("OKPAYWallet")] public string OKPAYWallet = "";
 
-        [JsonProperty("WMID")]
-        public string Wmid { get; set; }
+        [JsonProperty("WMID")] public string WMID = "";
 
-        [JsonProperty("Statuses")]
-        public List<object> Statuses { get; set; }
+        [JsonProperty("Statuses")] public List<string> Statuses = new List<string>();
 
-        [JsonProperty("IsFollowURLCorrect")]
-        public string IsFollowUrlCorrect { get; set; }
+        [JsonProperty("IsFollowURLCorrect")] public string IsFollowURLCorrect = "";
 
-        [JsonProperty("HasRatesErrors")]
-        public string HasRatesErrors { get; set; }
+        [JsonProperty("HasRatesErrors")] public string HasRatesErrors = "";
 
-        [JsonProperty("IsRefURLEmpty")]
-        public string IsRefUrlEmpty { get; set; }
+        [JsonProperty("IsRefURLEmpty")] public string IsRefURLEmpty = "";
 
-        [JsonProperty("IsHidden")]
-        public string IsHidden { get; set; }
+        [JsonProperty("IsHidden")] public string IsHidden = "";
 
-        [JsonProperty("IsUntrusted")]
-        public string IsUntrusted { get; set; }
+        [JsonProperty("IsUntrusted")] public string IsUntrusted = "";
     }
-
-
 }
