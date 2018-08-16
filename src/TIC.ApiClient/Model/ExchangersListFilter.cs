@@ -27,7 +27,7 @@ namespace TIC.ApiClient.Model
 
         [JsonProperty("Statuses")] public List<string> Statuses = new List<string>();
 
-        [JsonProperty("IsFollowURLCorrect")] public string IsFollowURLCorrect = "";
+        [JsonProperty("IsFollowUTICorrect")] public string IsFollowUTICorrect = "";
 
         [JsonProperty("HasRatesErrors")] public string HasRatesErrors = "";
 

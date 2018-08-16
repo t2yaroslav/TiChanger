@@ -10,6 +10,7 @@ namespace TIC.ParserStart
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Start ...");
             var restClient = new ApiClient.ApiClient();
 
             var filter = new ExchangersListFilter()
@@ -22,6 +23,8 @@ namespace TIC.ParserStart
             filter.startFrom = 20;
 
             var exchangers2 = restClient.GetExchangerList(filter);
+            
+            Console.WriteLine("... end.");
         }
     }
 }

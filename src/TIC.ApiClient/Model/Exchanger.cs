@@ -6,6 +6,13 @@ using Newtonsoft.Json.Converters;
 
 namespace TIC.ApiClient.Model
 {
+    using System;
+    using System.Collections.Generic;
+
+    using System.Globalization;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+
     public partial class Exchangers
     {
         [JsonProperty("Collection")]
@@ -30,7 +37,7 @@ namespace TIC.ApiClient.Model
     public partial class Result
     {
         [JsonProperty("StatusName")]
-        public StatusName StatusName { get; set; }
+        public string StatusName { get; set; }
 
         [JsonProperty("Name")]
         public string Name { get; set; }
@@ -72,6 +79,5 @@ namespace TIC.ApiClient.Model
         public object TotalEarnings { get; set; }
     }
 
-    public enum StatusName { Enabled, New };
-
+//    public enum StatusName { Enabled, New, NoRates, SuspendedByManager };
 }

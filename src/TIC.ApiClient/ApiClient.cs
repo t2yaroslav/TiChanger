@@ -30,7 +30,7 @@ namespace TIC.ApiClient
             Console.WriteLine("Create RestClient " + baseUrl);
             _client = new RestClient(baseUrl);
             _client.AddHandler("text/plain", new JsonDeserializer());
-
+            
             LoadCookies();
             if (_cookies == null)
             {
@@ -39,6 +39,49 @@ namespace TIC.ApiClient
             }
 
             ApplyCookie();
+        }
+
+        private IList<RestResponseCookie> Login()
+        {
+            Console.WriteLine("api/Login: " + username);
+            var requestLogin = new RestRequest("api/Login", Method.POST);
+            requestLogin.AddParameter("Account", username);
+            requestLogin.AddParameter("Password", password);
+            IRestResponse responseLogin = _client.Execute(requestLogin);
+            
+            return responseLogin.Cookies;
+        }
+
+        public Exchangers GetExchangerList(ExchangersListFilter filter)
+        {
+            var apiGetexchangerslist = "api/GetExchangersList";
+
+            var request = new RestRequest(apiGetexchangerslist, Method.POST);
+            request.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; };
+            request.AddJsonBody(filter);
+
+            IRestResponse<Exchangers> restResponse = ExecuteRequest<Exchangers>(request);
+            
+            Console.WriteLine(apiGetexchangerslist + ":" + restResponse?.Data?.Collection?.ItemsCount);
+            
+            return restResponse.Data;
+        }
+
+        private IRestResponse<T> ExecuteRequest<T>(RestRequest request) where T : new()
+        {
+            var result = _client.Execute<T>(request);
+            
+            // under construction
+            //if (result.ContentLength == -1)
+            //{
+            //    _cookies = Login();
+            //    SaveCookies();
+            //}
+            
+            if (result.ErrorException!=null)
+                throw new Exception(result.ErrorMessage, result.ErrorException);
+            
+            return result;
         }
 
         private void LoadCookies()
@@ -65,35 +108,12 @@ namespace TIC.ApiClient
                 serializer.Serialize(file, _cookies);
             }
         }
-
-        private IList<RestResponseCookie> Login()
-        {
-            Console.WriteLine("api/Login: " + username);
-            var requestLogin = new RestRequest("api/Login", Method.POST);
-            requestLogin.AddParameter("Account", username);
-            requestLogin.AddParameter("Password", password);
-            IRestResponse responseLogin = _client.Execute(requestLogin);
-            return responseLogin.Cookies;
-        }
-
-        public Exchangers GetExchangerList(ExchangersListFilter filter)
-        {
-            Console.WriteLine("api/GetExchangersList");
-
-            var request = new RestRequest("api/GetExchangersList", Method.POST);
-            request.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; };
-            request.AddJsonBody(filter);
-
-            IRestResponse<Exchangers> restResponse = _client.Execute<Exchangers>(request);
-            return restResponse.Data;
-        }
-
         private void ApplyCookie()
         {
             var sessionCookie = _cookies.FirstOrDefault();
             if (sessionCookie != null)
             {
-                Console.WriteLine("Cookie - " + sessionCookie.Name);
+                Console.WriteLine("Apply Cookie - " + sessionCookie.Name);
                 var cookieContainer = new CookieContainer();
                 cookieContainer.Add(new Cookie(sessionCookie.Name, sessionCookie.Value, sessionCookie.Path,
                     sessionCookie.Domain));
@@ -101,5 +121,6 @@ namespace TIC.ApiClient
             }
             else throw new Exception("No found cookies");
         }
+        
     }
 }
