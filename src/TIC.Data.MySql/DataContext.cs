@@ -1,8 +1,6 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using TIC.Data;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace TIC.DataMySql
+namespace TIC.Data.MySql
 {
     // for migrations:
     // from bbwt.web project: 

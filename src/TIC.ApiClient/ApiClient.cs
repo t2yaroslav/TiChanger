@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Deserializers;
-using RestSharp.Serializers;
 using TIC.ApiClient.Model;
 using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
