@@ -1,25 +1,14 @@
-
 using Microsoft.EntityFrameworkCore;
 
 namespace TIC.Data
 {
-    public abstract class DataContextBase : IDataContext
+    public abstract class DataContextBase
     {
-        protected DataContextBase(DbContextOptions options) : base(options)
+        protected DataContextBase()
         {
         }
 
-//        public DbSet<HangfireJobSettings> HangfireJobSettings { get; set; }
+        public DbSet<QueryHistory> QueryHistory { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-
-            builder.ApplyConfiguration(new MetadataConfiguration());
-            builder.ApplyConfiguration(new CarConfiguration());
-            builder.ApplyConfiguration(new ColorConfiguration());
-            builder.ApplyConfiguration(new OrderConfiguration());
-            builder.ApplyConfiguration(new PasswordHistoryConfiguration());
-        }
     }
 }
