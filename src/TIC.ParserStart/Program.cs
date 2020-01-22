@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using TIC.ApiClient.Model;
@@ -11,24 +12,9 @@ namespace TIC.ParserStart
     {
         static void Main(string[] args)
         {
-            // configurations
-            var environment = GetEnvironment();
-            var configuration = BuildConfiguration(args, environment);
-            
-            // app start
-            Console.WriteLine("Start ...");
-            var restClient = new ApiClient.ApiClient();
-
-            var filter = new ExchangersListFilter()
-            {
-                startFrom = 0
-            };
-
-            var exchangers = restClient.GetExchangerList(filter);
-            filter.startFrom = 20;
-
-            var exchangers2 = restClient.GetExchangerList(filter);
-            Console.WriteLine("... end.");
+            var parser = new Parser.Parser();
+            var result = parser.Start();
+            result = result;
         }
         
         // configuration
